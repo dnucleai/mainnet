@@ -1,0 +1,38 @@
+# https://medium.com/@gus_tavo_guim/deploying-a-smart-contract-the-hard-way-8aae778d4f2a
+
+# this assumes you've already set up your blockchain
+# if you haven't, read the blockchain setup tutorial file in this dir
+
+# compile the contract
+echo "var contract_output=`solc --optimize --combined-json abi,bin,interface erc20.sol`" > contract.js
+
+
+# IN YOUR GETH INTERPRETER:
+# load and setup
+loadScript('contract.js')
+var abi = contract_output.contracts['erc20.sol:nucleai'].abi
+var contract = eth.contract(JSON.parse(abi))
+var bin = "0x" + contract_output.contracts['erc20.sol:nucleai'].bin
+# start mining
+personal.unlockAccount(eth.coinbase)
+miner.start()
+# deploy
+var deployTransationObject = { from: eth.accounts[0], data: bin, gas: 1000000 };
+var instance = contract.new(deployTransationObject)
+# view your instance
+instance
+# view the transaction
+eth.getTransactionReceipt(storageInstance.transactionHash);
+
+# now we send to the contract to get tokens
+# IN YOUR GETH INTERPRETER:
+# check your token balance in the contract
+instance.balanceOf(eth.accounts[0])
+# 0 tokens. So we'll change that...
+# get the contract's address
+var contract_address = eth.getTransactionReceipt(instance.transactionHash).contractAddress
+# send an ether to it to activate its "payable" method
+eth.sendTransaction({from:eth.accounts[0], to:contract_address, value: 1})
+# check your token balance in the contract
+instance.balanceOf(eth.accounts[0])
+# you should have tokens now!
