@@ -3,14 +3,6 @@ pragma solidity ^0.4.18;
 // ----------------------------------------------------------------------------
 // nucleai token contract
 //
-// Deployed to : 0xD0FDf2ECd4CadE671a7EE1063393eC0eB90816FD
-// Symbol      : ncai
-// Name        : bitfwd Token
-// Total supply: Gazillion
-// Decimals    : 18
-//
-// Enjoy.
-//
 // (c) by Moritz Neto & Daniel Bar with BokkyPooBah / Bok Consulting Pty Ltd Au 2017. The MIT Licence.
 // ----------------------------------------------------------------------------
 
